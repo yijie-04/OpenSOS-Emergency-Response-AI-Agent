@@ -15,5 +15,8 @@ while keep_talking == 1:
     input = AudioToText.translate()
     print(input)
 
-    API_1.get_completion(input)
+    response = API_1.get_completion(input)
+    print(response)
+
+    keep_talking = 0
 
