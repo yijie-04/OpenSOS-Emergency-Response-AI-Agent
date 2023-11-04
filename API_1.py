@@ -1,6 +1,7 @@
 import openai
 import os
-from dotenv import load_dotenv, find_dotenv
+from info import caller
+#from dotenv import load_dotenv, find_dotenv
 
 _ = load_dotenv(find_dotenv())
 os.environ["OPENAI_API_KEY"] = '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'
@@ -21,17 +22,39 @@ def get_completion(input, model="gpt-3.5-turbo"):
     return response.choices[0].message["content"]
 
 text = f"""
-    My mom has a stroke! She can't breath at all now, and she\
+    I'm in 100 College St.\
 """
-prompt = f"""
+location_prompt = f"""
+    Determine the incident location from the message. 
+    The output should be in the format "Apartment Number", "Street Number", 
+    "Street Name". The output should be a dictionary.
+    If any of the information is not available, put N/A as the value.
+```{text}```
+"""
+location = get_completion(location_prompt)
+
+type_prompt = f"""
     Determine the emergency type.
     energency types: FIRE CALLS, POLICE CALLS, EMS CALLS
 ```{text}```
 """
+etype = get_completion(location_prompt) 
+
+type_prompt = f"""
+    Determine the emergency type.
+    energency types: FIRE CALLS, POLICE CALLS, EMS CALLS
+```{text}```
+"""
+etype = get_completion(location_prompt) 
+
+
+
+print(location)
+
+
 
 # output
-response = get_completion(prompt)
-print(response)
+# print(response) 
 
 
 '''
@@ -44,7 +67,6 @@ fire ->
 
 number of ambulence
 severity
-
 
 special case -> emergency
 '''
