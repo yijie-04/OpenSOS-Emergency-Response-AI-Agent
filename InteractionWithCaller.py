@@ -15,6 +15,7 @@ while keep_talking == 1:
     input = AudioToText.translate()
     print(input)
 
+    # send to AI Text Processing
     response = API_1.get_completion(input)
     print(response)
 
