@@ -2,11 +2,16 @@ import openai
 import os
 from dotenv import load_dotenv, find_dotenv
 
-#_ = load_dotenv(find_dotenv())
-os.environ["OPENAI_API_KEY"] = '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'
+_ = load_dotenv(find_dotenv())
+os.environ["OPENAI_API_KEY"] = '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'
 openai.api_key  = os.getenv("OPENAI_API_KEY")
 
-def get_completion(prompt, model="gpt-3.5-turbo"):
+def get_completion(input, model="gpt-3.5-turbo"):
+    prompt = f"""
+    Determine the emergency type.
+    energency types: FIRE CALLS, POLICE CALLS, EMS CALLS
+    ```{input}```
+    """
     messages = [{"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(
         model=model,

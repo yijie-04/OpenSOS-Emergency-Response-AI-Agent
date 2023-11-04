@@ -4,6 +4,7 @@
 from gtts import gTTS
 from pygame import mixer
 import tempfile
+import time
 
 def text_to_speech(text):
     # Convert text to speech
@@ -23,6 +24,8 @@ def play_audio(file):
 
     # Play the audio file
     mixer.music.play()
+    while mixer.music.get_busy():  # wait for the audio to finish
+        time.sleep(0.1)
 
 def translate(text):
     # text = "9 1 1, what's your emergency?"
