@@ -8,7 +8,7 @@ from gtts import gTTS
 from pygame import mixer
 import tempfile
 import time
-openai.api_key  = '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'
+openai.api_key  = 'your API key'
 
 # import tkinter
 # import tkinter.messagebox
