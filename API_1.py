@@ -4,7 +4,7 @@ from info import Caller
 from dotenv import load_dotenv, find_dotenv
 
 _ = load_dotenv(find_dotenv())
-os.environ["OPENAI_API_KEY"] = ' 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'
+os.environ["OPENAI_API_KEY"] = 'your API key'
 openai.api_key  = os.getenv("OPENAI_API_KEY")
 
 def get_completion(input, cur_caller, model="gpt-3.5-turbo"):
