@@ -1,7 +1,7 @@
 import tkinter
 import tkinter.messagebox
 import customtkinter
-import globals
+#from AI_final import final_suggestion, final_data
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -124,5 +124,13 @@ class App(customtkinter.CTk):
         print("sidebar_button click")
 
 
-app = App()
-app.mainloop()
+if __name__ == "__main__":
+    data, response_js, df = final_data()
+    hos_sug, amb_sug, fam_sug = final_suggestions(data, response_js, df)
+    input_keyInfo = "Lets just test it"
+    sex_char = 'F' if data['sex'] == 1 else 'M'
+    input_database = f"First name: {data['first_name']}\nLast name: {data['last_name']} \n\n Age: {data['age']}\Sex:{sex_char}\n Blood type: {data['blood_type']}\n \
+                                    Allergies: {data['allergies']} \tPast_disease: {data['past_desease']} \n\Family id: {data['family_id']}\n Address: {data['address']}"
+    input_transcript = "911: 9-1-1, what is your emergency? \nCaller: My house burned down\n 911: What is your name?"
+    app = App(input_keyInfo, input_database, input_transcript)
+    app.mainloop()
