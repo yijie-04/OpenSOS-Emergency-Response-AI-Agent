@@ -110,17 +110,14 @@ class App(customtkinter.CTk):
         
 
     def open_input_dialog_event_hospital(self):
-        dialog = customtkinter.CTkInputDialog(text="To hospital:", title="SendMessage")
-        # print("CTkInputDialog:", hos_sug)
+        dialog = customtkinter.CTkInputDialog(text=hos_sug, title="SendMessage")
+
     def open_input_dialog_event_family(self):
         dialog = customtkinter.CTkInputDialog(text=fam_sug, title="SendMessage")
-        print("CTkInputDialog:", fam_sug)
+        
     def open_input_dialog_event_ambulance(self):
-        dialog = customtkinter.CTkInputDialog(text="To ambulance:", title="SendMessage")
-        # print("CTkInputDialog:", amb_sug)
-        dialogue = customtkinter.CTkTextbox(self.database, width=150)
-        dialog.grid(row=1, column=0,padx=(20, 20), pady=(0, 20), sticky="nsew")
-        dialogue.insert("0.0", input_database + "\n\n")
+        dialog = customtkinter.CTkInputDialog(text=amb_sug, title="SendMessage")
+
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)

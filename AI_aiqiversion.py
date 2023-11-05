@@ -8,7 +8,7 @@ from gtts import gTTS
 from pygame import mixer
 import tempfile
 import time
-openai.api_key  = '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'
+openai.api_key  = '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'
 
 
 def Check(info):
@@ -133,7 +133,7 @@ def final_data():
             break
         elif (response_js['type'] != 'EMS CALLS'):
             say = Check(response_js)
-            
+
         say = Check(response_js)
         if say == None:
             keep_talking = 0
