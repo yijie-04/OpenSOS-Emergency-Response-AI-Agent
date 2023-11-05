@@ -9,8 +9,7 @@ from gtts import gTTS
 from pygame import mixer
 import tempfile
 import time
-openai.api_key  = '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'
-
+openai.api_key  = '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'
 
 def Check(info):
     if info["name"] == "XXX":
