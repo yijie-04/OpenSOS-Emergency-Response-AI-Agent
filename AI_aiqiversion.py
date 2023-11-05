@@ -8,15 +8,7 @@ from gtts import gTTS
 from pygame import mixer
 import tempfile
 import time
-openai.api_key  = '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'
-
-# import tkinter
-# import tkinter.messagebox
-# import customtkinter
-
-# customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
-# customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
-
+openai.api_key  = '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'
 
 
 def Check(info):
@@ -87,18 +79,18 @@ def get_sug(prompt, model="gpt-3.5-turbo"):
     return response.choices[0].message["content"]
 
 
-def get_emergency_info(call, cur_info, name_list, model="gpt-3.5-turbo"): 
+def get_emergency_info(call, name_list,  cur_info, model="gpt-3.5-turbo"): 
     prompt = f"""role':'system', 'content':
             Get information from the following text ```{call}``` and ```{cur_info}`` in an emergency caller\
-            1. <name> of the caller:
-            (use the list in```{name_list}```, if the actual name getting from the text does not match, 
-            then choose the most similar one of the first name)
-            2. <emergency types>: FIRE CALLS, POLICE CALLS, EMS CALLS (don't need to be really specific)\
-            3. the incident <location> detailed to street and apartment number\
-            4. the <symptoms>\
+            1. name of the caller: use the list in```{name_list}``` and get the name
+               if the actual name getting from the text does not match, then choose the most similar one of the first name
+            2. emergency types: FIRE CALLS, POLICE CALLS, EMS CALLS\
+            3. the incident location (as short as possible)\
+            4. the symptoms (as short as possible)\
 
             Note:
             if any of the information is not available, put XXX as the value.\
+            if all the information has a value
             
             Output:
             save all the information in JSON format, with the key: name, type, location, symptoms\
@@ -120,7 +112,6 @@ def final_data():
     name_list = df['first_name']
     cur_info = ''
     transc = ""
-
     while keep_talking == 1:
         translate(say)
         input1 = AtoT()
@@ -132,7 +123,7 @@ def final_data():
             her nose is bleeding. We are in 100 College St.\
         """
         '''
-        response = get_emergency_info(input, cur_info, name_list)
+        response = get_emergency_info(input1, cur_info, name_list)
         cur_info = response
         response_js = json.loads(response)
 
@@ -142,7 +133,7 @@ def final_data():
             break
         elif (response_js['type'] != 'EMS CALLS'):
             say = Check(response_js)
-
+            
         say = Check(response_js)
         if say == None:
             keep_talking = 0
@@ -197,6 +188,3 @@ def final_suggestions(df_information, response_js, df):
                 """
     fam_sug = get_sug(prompt_fam)
     return hos_sug, amb_sug, fam_sug
-    
-
-    

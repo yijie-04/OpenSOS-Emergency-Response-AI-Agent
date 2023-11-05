@@ -80,15 +80,14 @@ def translate(text):
 def get_emergency_info(call, name_list,  cur_info, model="gpt-3.5-turbo"): 
     prompt = f"""role':'system', 'content':
             Get information from the following text ```{call}``` and ```{cur_info}`` in an emergency caller\
-            1. name of the caller: use the list in```{name_list}``` and get the name
-               if the actual name getting from the text does not match, then choose the most similar one of the first name
-            2. emergency types: FIRE CALLS, POLICE CALLS, EMS CALLS\
-            3. the incident location (as short as possible)\
-            4. the symptoms (as short as possible)\
-
+            1. <name> of the caller:
+            (use the list in```{name_list}```, if the actual name getting from the text does not match, 
+            then choose the most similar one of the first name)
+            2. <emergency types>: FIRE CALLS, POLICE CALLS, EMS CALLS (don't need to be really specific)\
+            3. the incident <location> detailed to street and apartment number\
+            4. the <symptoms>\
             Note:
             if any of the information is not available, put XXX as the value.\
-            if all the information has a value
             
             Output:
             save all the information in JSON format, with the key: name, type, location, symptoms\
@@ -242,6 +241,7 @@ if __name__ == "__main__":
     df = pd.read_json(filename)
     name_list = df['first_name']
     cur_info = ''
+    transc = ""
 
     while keep_talking == 1:
         translate(say)

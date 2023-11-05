@@ -1,14 +1,14 @@
 import tkinter
 import tkinter.messagebox
 import customtkinter
-from AI_final import final_suggestions, final_data
+from AI_aiqiversion import final_suggestions, final_data
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 
 class App(customtkinter.CTk):
-    def __init__(self):
+    def __init__(self, input_keyInput, input_database, input_transcript, hos_sug, amb_sug, fam_sug):
         super().__init__()
 
         # configure window
@@ -26,11 +26,11 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(4, weight=1)
         self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, text="OpenSOS", font=customtkinter.CTkFont(size=20, weight="bold"))
         self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
-        self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, command=self.sidebar_button_event)
+        self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, command=self.open_input_dialog_event_hospital, text = "To Hospital")
         self.sidebar_button_1.grid(row=1, column=0, padx=20, pady=10)
-        self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, command=self.sidebar_button_event)
+        self.sidebar_button_2 = customtkinter.CTkButton(self.sidebar_frame, command=self.open_input_dialog_event_ambulance, text = "To Ambulance")
         self.sidebar_button_2.grid(row=2, column=0, padx=20, pady=10)
-        self.sidebar_button_3 = customtkinter.CTkButton(self.sidebar_frame, command=self.sidebar_button_event)
+        self.sidebar_button_3 = customtkinter.CTkButton(self.sidebar_frame, command=self.open_input_dialog_event_family, text = "To Family")
         self.sidebar_button_3.grid(row=3, column=0, padx=20, pady=10)
         self.appearance_mode_label = customtkinter.CTkLabel(self.sidebar_frame, text="Appearance Mode:", anchor="w")
         self.appearance_mode_label.grid(row=5, column=0, padx=20, pady=(10, 0))
@@ -56,7 +56,7 @@ class App(customtkinter.CTk):
         self.database_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
         self.database_text = customtkinter.CTkTextbox(self.database, width=150)
         self.database_text.grid(row=1, column=0,rowspan=5, padx=(20, 20), pady=(0, 20), sticky="nsew")
-        self.database_text.insert("0.0", globals.datab + "\n\n")
+        self.database_text.insert("0.0", input_database + "\n\n")
 
         # create transcript
         self.transcript = customtkinter.CTkFrame(self)  # fg_color="transparent"
@@ -67,7 +67,7 @@ class App(customtkinter.CTk):
         self.transcript_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
         self.transcript_text = customtkinter.CTkTextbox(self.transcript, width=150)
         self.transcript_text.grid(row=1, column=0,rowspan=5, padx=(20, 20), pady=(0, 20), sticky="nsew")
-        self.transcript_text.insert("0.0",  globals.transc + "\n\n" )
+        self.transcript_text.insert("0.0",  input_transcript + "\n\n" )
 
 
         # create Key Info
@@ -79,7 +79,7 @@ class App(customtkinter.CTk):
         self.keyInfo_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
         self.keyInfo_text = customtkinter.CTkTextbox(self.keyInfo, width=150)
         self.keyInfo_text.grid(row=1, column=0,rowspan=5, padx=(20, 20), pady=(0, 20), sticky="nsew")
-        self.keyInfo_text.insert("0.0", globals.key_inf + "\n\n")
+        self.keyInfo_text.insert("0.0", input_keyInfo + "\n\n")
 
 
         # create Emergency Response sending
@@ -109,9 +109,18 @@ class App(customtkinter.CTk):
         # self.scaling_optionemenu.set("100%")
         
 
-    def open_input_dialog_event(self):
-        dialog = customtkinter.CTkInputDialog(text="Type in a number:", title="CTkInputDialog")
-        print("CTkInputDialog:", dialog.get_input())
+    def open_input_dialog_event_hospital(self):
+        dialog = customtkinter.CTkInputDialog(text="To hospital:", title="SendMessage")
+        # print("CTkInputDialog:", hos_sug)
+    def open_input_dialog_event_family(self):
+        dialog = customtkinter.CTkInputDialog(text=fam_sug, title="SendMessage")
+        print("CTkInputDialog:", fam_sug)
+    def open_input_dialog_event_ambulance(self):
+        dialog = customtkinter.CTkInputDialog(text="To ambulance:", title="SendMessage")
+        # print("CTkInputDialog:", amb_sug)
+        dialogue = customtkinter.CTkTextbox(self.database, width=150)
+        dialog.grid(row=1, column=0,padx=(20, 20), pady=(0, 20), sticky="nsew")
+        dialogue.insert("0.0", input_database + "\n\n")
 
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)
@@ -125,12 +134,17 @@ class App(customtkinter.CTk):
 
 
 if __name__ == "__main__":
-    data, response_js, df = final_data()
+    data, response_js, df, transc, response = final_data()
     hos_sug, amb_sug, fam_sug = final_suggestions(data, response_js, df)
-    input_keyInfo = "Lets just test it"
+    input_keyInfo = response
     sex_char = 'F' if data['sex'] == 1 else 'M'
-    input_database = f"First name: {data['first_name']}\nLast name: {data['last_name']} \n\n Age: {data['age']}\Sex:{sex_char}\n Blood type: {data['blood_type']}\n \
-                                    Allergies: {data['allergies']} \tPast_disease: {data['past_desease']} \n\Family id: {data['family_id']}\n Address: {data['address']}"
-    input_transcript = "911: 9-1-1, what is your emergency? \nCaller: My house burned down\n 911: What is your name?"
-    app = App(input_keyInfo, input_database, input_transcript)
+    input_database = f"First name: {data['first_name']}\nLast name: {data['last_name']} \n\nAge: {data['age']}\nSex: {sex_char}\nBlood type: {data['blood_type']}\nAllergies: {data['allergies']} \nPast_disease: {data['past_desease']} \nFamily id: {data['family_id']}\nAddress: {data['address']}"
+    input_transcript = transc
+    app = App(input_keyInfo, input_database, input_transcript, hos_sug, amb_sug, fam_sug)
     app.mainloop()
+
+
+'''
+hello, my dad jim is having a stroke, he can't breate right now! we live in 194 ESC street, please come real quick
+hello, my friend guitar just fall off the floor, he's head and back is heavily injured 
+'''
