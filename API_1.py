@@ -55,10 +55,10 @@ def get_completion(input, model="gpt-3.5-turbo"):
 
     sym = "NA"
     if etype == 'EMS CALLS':
-        sym = None
         sym_prompt = f"""
             Determine the symptoms of the medical emergency.
-            Output in a list format of symptoms
+            Output in a list format of symptoms.
+            If no symptoms detected, output None
         ```{text}```
         """
         sym = [{"role": "user", "content": sym_prompt}]
@@ -68,7 +68,28 @@ def get_completion(input, model="gpt-3.5-turbo"):
             temperature=0.1, # lower the 随机性 it is
         )
         sym_res = sym_res.choices[0].message["content"]
-    cur_caller = Caller(caller_name = name_res, symptoms = sym, incident_type = etype_res, incident_location = location_res)
+        if sym_res == "None":
+            sym_res = None
+
+        severity_prompt = f"""
+        Determine the severity of the medical situation.
+        The severity is based on the following levels:
+        Score 1: Barely requires any treatment, requires minimal treatment. Examples are coughing, small cut, mild sprain, skin infection.
+        Score 2: One organ/system is injured, requires moderate treatment. Examples are moderate pneumonia, moderate fracture, pain.
+        Score 3: Many organs/systems are injured, requires significant treatment. Examples are severe pneumonia, acute myocardial infarction, complicated fracture.
+        Score 4: Death-risking, requires immediate and extensive treatment. Examples are heart attack, choking, head injury passing out, fainting, or confusion, burn. 
+        Output the number of the level only
+        ```{input}```
+        """
+        severity = [{"role": "user", "content": severity_prompt}]
+        severity_res = openai.ChatCompletion.create(
+            model=model,
+            messages=severity,
+            temperature=0.1, # lower the 随机性 it is
+        )
+        severity_res = severity_res.choices[0].message["content"]
+ 
+    cur_caller = Caller(caller_name = name_res, symptoms = sym, incident_type = etype_res, incident_location = location_res, severity = severity_res)
     cur_caller.print_info()
     return cur_caller
     
