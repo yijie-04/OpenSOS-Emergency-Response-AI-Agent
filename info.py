@@ -2,8 +2,8 @@
 from datetime import datetime
 
 class Caller:
-    def __init__(self, caller_name, symptoms,
-                 incident_type, incident_location, timestamp=None, priority=None,
+    def __init__(self, caller_name = "XXX", symptoms = "XXX",
+                 incident_type = "XXX", incident_location = "XXX", timestamp=None, priority=None,
                  call_id = '123', caller_phone = '555-1234',
                  severity = None):
         self.call_id = call_id
