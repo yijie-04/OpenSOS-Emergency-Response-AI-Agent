@@ -1,13 +1,14 @@
 import tkinter
 import tkinter.messagebox
 import customtkinter
+import globals
 
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 
 class App(customtkinter.CTk):
-    def __init__(self, input_keyInput, input_database, input_transcript):
+    def __init__(self):
         super().__init__()
 
         # configure window
@@ -55,7 +56,7 @@ class App(customtkinter.CTk):
         self.database_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
         self.database_text = customtkinter.CTkTextbox(self.database, width=150)
         self.database_text.grid(row=1, column=0,rowspan=5, padx=(20, 20), pady=(0, 20), sticky="nsew")
-        self.database_text.insert("0.0", input_database + "\n\n")
+        self.database_text.insert("0.0", globals.datab + "\n\n")
 
         # create transcript
         self.transcript = customtkinter.CTkFrame(self)  # fg_color="transparent"
@@ -66,7 +67,7 @@ class App(customtkinter.CTk):
         self.transcript_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
         self.transcript_text = customtkinter.CTkTextbox(self.transcript, width=150)
         self.transcript_text.grid(row=1, column=0,rowspan=5, padx=(20, 20), pady=(0, 20), sticky="nsew")
-        self.transcript_text.insert("0.0",  input_transcript + "\n\n" )
+        self.transcript_text.insert("0.0",  globals.transc + "\n\n" )
 
 
         # create Key Info
@@ -78,7 +79,7 @@ class App(customtkinter.CTk):
         self.keyInfo_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
         self.keyInfo_text = customtkinter.CTkTextbox(self.keyInfo, width=150)
         self.keyInfo_text.grid(row=1, column=0,rowspan=5, padx=(20, 20), pady=(0, 20), sticky="nsew")
-        self.keyInfo_text.insert("0.0", input_keyInfo + "\n\n")
+        self.keyInfo_text.insert("0.0", globals.key_inf + "\n\n")
 
 
         # create Emergency Response sending
@@ -123,9 +124,5 @@ class App(customtkinter.CTk):
         print("sidebar_button click")
 
 
-if __name__ == "__main__":
-    input_keyInfo = "Lets just test it"
-    input_database = "Rachel Yang's file \n\n Age: 19 \nContacts:\nDaye Yang \tRelationship: Father \tPhone: 999-999-999"
-    input_transcript = "911: 9-1-1, what is your emergency? \nCaller: My house burned down\n 911: What is your name?"
-    app = App(input_keyInfo, input_database, input_transcript)
-    app.mainloop()
+app = App()
+app.mainloop()

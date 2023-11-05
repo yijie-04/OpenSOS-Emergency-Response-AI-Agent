@@ -83,7 +83,8 @@ def get_completion(input, cur_caller, model="gpt-3.5-turbo"):
     
     # cur_caller = Caller(caller_name = name_res, symptoms = sym, incident_type = etype_res, incident_location = location_res)
     cur_caller.print_info()
-    return cur_caller
+    globals.key_info(cur_caller.print_info())
+    return None
     
     #return response.choices[0].message["content"]
 
