@@ -9,7 +9,7 @@ from pygame import mixer
 import tempfile
 import time
 openai.api_key  = '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'
-
+#
 
 def Check(info):
     if info["name"] == "XXX":

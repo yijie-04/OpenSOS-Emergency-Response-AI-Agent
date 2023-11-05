@@ -6,7 +6,7 @@ from OpenSOSfunctions import final_suggestions, final_data
 customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
-
+#
 class App(customtkinter.CTk):
     def __init__(self, input_keyInput, input_database, input_transcript, hos_sug, amb_sug, fam_sug):
         super().__init__()
