@@ -2,7 +2,6 @@ import os
 import json
 import pandas as pd
 import openai
-import panel as pn  # GUI
 from dotenv import load_dotenv, find_dotenv
 import speech_recognition as sr
 from gtts import gTTS
