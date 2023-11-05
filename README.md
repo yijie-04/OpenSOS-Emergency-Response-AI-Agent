@@ -1,5 +1,5 @@
 # OpenSOS: Emergency Response AI Agent
-
+![](logo.png)
 ## Inspiration ✨
 In a world where every second counts, especially during emergencies, we were inspired to create a solution that leverages the power of AI to save lives and provide immediate assistance. Our inspiration came from stories of people who faced critical situations and couldn't get help in time. We envisioned an AI that could streamline the 911 calling process and lift the burden off of 911 operators. 
 
