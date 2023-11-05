@@ -18,5 +18,5 @@ As our first time doing AI-integrated systems, we learned to work with the OpenA
 ## What we learned 📚
 On top of technical aspects, we were able to work in a team and think as one. We also researched and learned about the nuances of various emergency protocols and the responsibilities of 911 operators.
 
-## What's next for OpenSOS: Emergency Response AI Agent
+## What's next for OpenSOS: Emergency Response AI Agent 👾
 The future of OpenSOS is promising. We're looking to integrate real-time location-based services to provide even more precise assistance. We're also exploring partnerships with smart home and urban infrastructure systems to enhance the reach and effectiveness of OpenSOS. We look forward to apply this system to real databases and work with exterior parties such as hospitals to provide accurate recommendations.
