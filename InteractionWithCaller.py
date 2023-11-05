@@ -8,7 +8,7 @@ import CheckMissingData
 
 
 keep_talking = 1
-cur_caller = Caller(caller_name = "XXX", symptoms = None, incident_type = None, incident_location = None)
+cur_caller = Caller()
 # initial prompt
 say = "9 1 1, what's your emergency?"
 while keep_talking == 1:

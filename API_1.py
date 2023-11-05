@@ -4,7 +4,7 @@ from info import Caller
 from dotenv import load_dotenv, find_dotenv
 
 _ = load_dotenv(find_dotenv())
-os.environ["OPENAI_API_KEY"] = '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'
+os.environ["OPENAI_API_KEY"] = ' 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'
 openai.api_key  = os.getenv("OPENAI_API_KEY")
 
 def get_completion(input, cur_caller, model="gpt-3.5-turbo"):
@@ -29,12 +29,12 @@ def get_completion(input, cur_caller, model="gpt-3.5-turbo"):
     
     if cur_caller.incident_location == "XXX":
         location_prompt = f"""
-        Determine the incident location from the message. 
-        The output should be in the format "Apartment Number", "Street Number", 
-        "Street Name". The output should be a dictionary.
-        If any of the information is not available, put XXX as the value.
+        Determine the incident location from the message. This should be an address or a defining location.
+        If the information is not explicitly available, put XXX as the value.
         ```{input}```
         """
+        # The output should be in the format "Apartment Number", "Street Number", 
+        # "Street Name". The output should be a dictionary.
         location = [{"role": "user", "content": location_prompt}]
         location_res = openai.ChatCompletion.create(
             model=model,
@@ -48,7 +48,7 @@ def get_completion(input, cur_caller, model="gpt-3.5-turbo"):
         name_prompt = f"""
         Determine the name of the caller.
         Output the name only.
-        If any of the information is not available, put XXX as the value.
+        If any of the information is not explicitly available, put XXX as the value.
         ```{input}```
         """
         name = [{"role": "user", "content": name_prompt}]
@@ -61,8 +61,7 @@ def get_completion(input, cur_caller, model="gpt-3.5-turbo"):
         cur_caller.caller_name = name_res
 
     if cur_caller.symptoms == "XXX":
-        sym = "XXX"
-        if etype == 'EMS CALLS':
+        if cur_caller.incident_type == 'EMS CALLS':
             sym = "XXX"
             sym_prompt = f"""
                 Determine the symptoms of the medical emergency.
@@ -79,7 +78,8 @@ def get_completion(input, cur_caller, model="gpt-3.5-turbo"):
             sym_res = sym_res.choices[0].message["content"]
             cur_caller.symptoms = sym_res
         else:
-            sym = "N/A"
+            cur_caller.symptoms = "N/A"
+            
     
     # cur_caller = Caller(caller_name = name_res, symptoms = sym, incident_type = etype_res, incident_location = location_res)
     cur_caller.print_info()
