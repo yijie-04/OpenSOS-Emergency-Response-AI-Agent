@@ -12,7 +12,7 @@ def get_completion(input, cur_caller, model="gpt-3.5-turbo"):
     if cur_caller.incident_type == "XXX":
         type_prompt = f"""
         Determine the emergency type.
-        energency types: FIRE CALLS, POLICE CALLS, EMS CALLS
+        emergency types: FIRE CALLS, POLICE CALLS, EMS CALLS
         Output the type only.
         If any of the information is not available, put XXX as the value.
         ```{input}```
