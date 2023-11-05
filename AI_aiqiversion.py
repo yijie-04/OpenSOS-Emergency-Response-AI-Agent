@@ -8,7 +8,7 @@ from gtts import gTTS
 from pygame import mixer
 import tempfile
 import time
-openai.api_key  = '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'
+openai.api_key  = 'your API key'
 
 
 def Check(info):
